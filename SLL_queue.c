@@ -29,6 +29,17 @@ Node *insert_rear(Node*head)
     }
     return head;
 }
+Node *concat(Node *first,Node *second)
+{
+    Node *cun;
+    if(first==NULL) return second;
+    if(second==NULL) return first;
+    cun=first;
+    while(cun->link!=NULL)
+        cun=cun->link;
+    cun->link=second;
+    return first;
+}
 void display(Node *head)
 {
     Node *p;
@@ -65,19 +76,51 @@ void main()
 {
     int ch,count,i,n,key;
     Node *head;
+    Node *head1;
+    head1=NULL;
     head=NULL;
-    printf("Enter the number of elements\n");
-    scanf("%d",&n);
-    for(i=1;i<=n;i++)
-    {
-        head=insert_rear(head);
-    }
+    
     display(head);
-    printf("Enter the key element\n");
-    scanf("%d",&key);
-    pos=linear_search(key,head);
-    if(flag!=0)
-        printf("The element %d is found in %d\n",key,pos);
-    else
-    printf("Element not found\n");
+    do
+    {
+        printf("Menu:");
+        printf("\n1.Linear Search\n2.Concat\n3.Exit\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1: printf("Enter the number of elements\n");
+                    scanf("%d",&n);
+                    for(i=1;i<=n;i++)
+                    {
+                        head=insert_rear(head);
+                    }
+                    printf("Enter the key element\n");
+                    scanf("%d",&key);
+                    pos=linear_search(key,head);
+                    if(flag!=0)
+                    printf("The element %d is found in %d\n",key,pos);
+                    else
+                    printf("Element not found\n");
+                    break;
+            case 2: printf("Enter the number of elements of list1\n");
+                    scanf("%d",&n);
+                    for(i=1;i<=n;i++)
+                    {
+                        head=insert_rear(head);
+                    } 
+                    printf("Enter the number of elements of list2\n");
+                    scanf("%d",&n);
+                    for(i=1;i<=n;i++)
+                    {
+                        head1=insert_rear(head1);
+                    }
+                    head=concat(head,head1);
+                    printf("\nConcatinated list\n");
+                    display(head);
+                    break;
+            case 3:exit(0);
+            default:printf("\nINVALID CHOICE\n");
+        }
+    }while(ch!=3);
+    
 }
